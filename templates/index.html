@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section class="">
+        <div class="flex items-center py-[1em] justify-center">
+            <div class="w-[300px] h-[300px] bg-blue-400 flex flex-col items-center justify-around font-bold p-[20px] rounded-lg my-[1em]">
+                <div>
+                    <p>Ville: {{data.name}}</p>
+                </div>
+
+                <div>
+                    <p>Temperature: {{data.main.temp}} °C</p>
+                </div>
+                <div>
+                    <p>Humidity: {{data.main.humidity}} %</p>
+                </div>
+                <div>
+                    <p>Wind Speed: {{data.wind.speed}} m/s</p>
+                </div>
+                <div>
+                    <p>Pressure: {{data.main.pressure}} hPa</p>
+                </div>
+                <div>
+                    <p>Description: {{data.weather[0].description}}</p>
+                </div>
+            </div>
+            <div class="ml-[100px] ">
+                <form action="/" method="post">
+                    <div class="rounded-lg border-black border-[2px]">
+                        <input type="text" placeholder="City" name="city"  class="outline-none rounded-sm p-[20px]"/>
+                        <button type="submit" class="bg-blue-500 h-full font-bold p-[20px]">submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="bg-[#0A2979]">
+            {% for day, data in data_forcast.items() %}
+                <div class="items-center border-black border-[2px] gap-10 text-center py-[10px]">
+                    <h2 class="font-bold text-xl text-white">{{day}}</h2>
+                    <div class="w-[40px] flex gap-x-16 mt-[25px] pl-[25px] justify-between">
+                        {% for item in data %}
+                            <div class="text-white ">
+                                <p>Time: {{ item['time'] }}</p>
+                                <p>Temperature: {{ item['temp'] }} °C</p>
+                                <div class="flex items-center">
+                                    <img src="http://openweathermap.org/img/wn/{{ item['icon'] }}.png" alt="Weather Icon">
+                                    <p>{{ item['description'] }}</p>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
